@@ -48,7 +48,8 @@ int main()
     //    sum is the sum of the first count grades
     //    after entering the last value, hit the F6 button, then enter (to indicate end of file)
     //    or hit Ctrl+z, then enter.
-    while (cin >> x)
+    while (cin >> x) // The condition/subject of the while will be satisfied,
+                    // if the read procedure succeeds, and also then x will hold the value we just read.
     {
         ++count;
         sum += x;
