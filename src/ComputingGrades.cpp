@@ -43,19 +43,19 @@ int main()
     // a variable into which to read
     double x;
 
-    // invariant:
-    //    we have read count grades so far, and
-    //    sum is the sum of the first count grades
-    //    after entering the last value, hit the F6 button, then enter (to indicate end of file)
-    //    or hit Ctrl+z, then enter,
+    // Invariants:
+    //    1. we have read count grades so far, and
+    //    2. sum is the sum of the first count grades
+    // after entering the last value, hit the F6 button, then enter (to indicate end of file)
+    // or hit Ctrl+z, then enter,
     // in fact any input value other than the type of doube will terminate the read in the while loop.
     while (cin >> x) // The condition/subject of the while will be true,
                     // if the read procedure succeeds, and also then x will hold the value we just read.
                    // equivalent to do cin >> x first and then do test while(cin),again, cin will be converted to the
                   // value of true when the read succeed.
     {
-        ++count;
-        sum += x;
+        ++count; // makes Invariant 1. true again
+        sum += x; // makes Invariant 2. true again
     }
 
     //double dummy = count; // for some reason the code fails unless I add this line.
