@@ -32,7 +32,8 @@ int main()
     cin >> midterm >> final;
 
     // ask for the homework grades
-    cout << "Enter all your homework grades, "
+    cout << "Enter all your homework grades, " // note: strings separated by a single space will
+                                               // be concatenated.
             "followed by end-of-file: ";
 
     // the number and sum of grades read so far
@@ -56,11 +57,12 @@ int main()
     //double dummy = count; // for some reason the code fails unless I add this line.
 
     // write the result
-    streamsize prec = cout.precision();
+    streamsize out_prec = cout.precision(); // Store the value of the precision of the original output
+                                          // so that we can reset it once we finished outputing
 
      cout << "Your final grade is " << setprecision(3)
           << 0.2 * midterm + 0.4 * final + 0.4 * sum / count
-          << setprecision(prec) << endl;
+          << setprecision(out_prec) << endl; // reset the original output precision
 
     return 0;
 }
