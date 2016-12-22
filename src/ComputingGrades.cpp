@@ -6,17 +6,21 @@
 // Description : Read, store and manipulate some data in C++, Ansi-style
 //============================================================================
 
+#include <algorithm>
 #include <iomanip>
 #include <ios>
 #include <iostream>
 #include <string>
+#include <vector>
 
 using std::cin;
 using std::cout;
 using std::endl;
 using std::setprecision;
-using std::string;
+using std::sort;
 using std::streamsize;
+using std::string;
+using std::vector;
 
 int main()
 {
@@ -32,41 +36,54 @@ int main()
     cin >> midterm >> final;
 
     // ask for the homework grades
-    cout << "Enter all your homework grades, " // note: strings separated by a single space will
-                                               // be concatenated.
+    cout << "Enter all your homework grades (based on the 100/100 marking standard), "
             "followed by end-of-file: ";
 
-    // the number and sum of grades read so far
-    int count = 0 ;
+    vector<double> homework;
+    double x;
+    int count = 0;
     double sum = 0.0;
 
-    // a variable into which to read
-    double x;
+    // invariant: homework contains all the homework grades read so far
+    while (cin >> x){
 
-    // Invariants:
-    //    1. we have read count grades so far, and
-    //    2. sum is the sum of the first count grades
-    // after entering the last value, hit the F6 button, then enter (to indicate end of file)
-    // or hit Ctrl+z, then enter,
-    // in fact any input value other than the type of doube will terminate the read in the while loop.
-    while (cin >> x) // The condition/subject of the while will be true,
-                    // if the read procedure succeeds, and also then x will hold the value we just read.
-                   // equivalent to do cin >> x first and then do test while(cin),again, cin will be converted to the
-                  // value of true when the read succeed.
-    {
-        ++count; // makes Invariant 1. true again
-        sum += x; // makes Invariant 2. true again
+    	++count;
+        sum+=x;
+
+        homework.push_back(x);
+
     }
 
-    //double dummy = count; // for some reason the code fails unless I add this line.
+    // check that the student entered some homework grades
+    typedef vector<double>::size_type vector_size;
+    vector_size size = homework.size();
 
-    // write the result
-    streamsize out_prec = cout.precision(); // Store the value of the precision of the original output
-                                          // so that we can reset it once we finished outputing
+    if (size == 0)
+    {
+        cout << endl << "Your grades must be numbers. "
+                        "Please try again." << endl;
+        return 1;
+    }
 
-     cout << "Your final grade is " << setprecision(3)
-          << 0.2 * midterm + 0.4 * final + 0.4 * sum / count
-          << setprecision(out_prec) << endl; // reset the original output precision
+    // sort the grades
+    sort(homework.begin(), homework.end());
+
+    // compute the median homework grade
+    vector_size mid = size/2;
+    double median = size % 2;
+
+    median == 0 ? (homework[mid] + homework[mid-1]) / 2
+                : homework[mid];
+
+    // compute write the final grade
+    streamsize prec = cout.precision();
+
+    cout << "Based on the Median calculation, your final grade is " << setprecision(3)
+         << 0.2 * midterm + 0.4 * final + 0.4 * median
+         << endl;
+    cout << "Based on the Average calculation, your final grade is " << setprecision(3)
+         << 0.2 * midterm + 0.4 * final + 0.4 * (sum/count)
+         << setprecision(prec)  << endl;
 
     return 0;
 }
