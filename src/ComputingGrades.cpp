@@ -3,7 +3,7 @@
 // Author      : Yifan Li
 // Version     :
 // Copyright   : Your copyright notice
-// Description : Read, store and manipulate some data in C++, Ansi-style
+// Description : Read, store (in the type of vector<double>) and manipulate some data in C++.
 //============================================================================
 
 #include <algorithm>
